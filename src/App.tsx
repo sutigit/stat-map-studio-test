@@ -1,6 +1,6 @@
 import './App.css';
 import { useEffect, useRef } from 'react';
-import StatMapDisplay, { Country, AdministrativeLevel } from 'stat-map-display';
+import StatMapDisplay, { Country, AdministrativeLevel, ResolutionLevel } from 'stat-map-display';
 
 function App() {
   const viewRef = useRef<StatMapDisplay | null>(null);
@@ -8,11 +8,12 @@ function App() {
   useEffect(() => {
     if (!viewRef.current) {
       viewRef.current = new StatMapDisplay({
-        id: 'my-map',
+        id: 'stat-map',
         country: Country.FINLAND,
         administrativeLevel: AdministrativeLevel.MUNICIPALITY,
+        resolution: ResolutionLevel.LEVEL_1,
         style: {
-          strokeWidth: 0.1,
+          strokeWidth: 0.2,
         },
         settings: {
           select: false,
@@ -29,7 +30,7 @@ function App() {
       </div>
 
       <div className='map-container'>
-        <div id='my-map'></div>
+        <div id='stat-map'></div>
       </div>
     </main>
   )
