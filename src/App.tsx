@@ -3,11 +3,11 @@ import { useEffect, useRef } from 'react';
 import StatMapDisplay, { Country, AdministrativeLevel, ResolutionLevel } from 'stat-map-display';
 
 function App() {
-  const viewRef = useRef<StatMapDisplay | null>(null);
+  const statMapRef = useRef<StatMapDisplay | null>(null);
 
   useEffect(() => {
-    if (!viewRef.current) {
-      viewRef.current = new StatMapDisplay({
+    if (!statMapRef.current) {
+      statMapRef.current = new StatMapDisplay({
         id: 'stat-map',
         country: Country.FINLAND,
         administrativeLevel: AdministrativeLevel.MUNICIPALITY,
@@ -23,6 +23,10 @@ function App() {
     }
   }, []);
 
+  const exportMap = () => {
+    console.log('helllo');
+  }
+
   return (
     <main id="app">
       <div className="options">
@@ -30,7 +34,15 @@ function App() {
       </div>
 
       <div className='map-container'>
-        <div id='stat-map'></div>
+        <div id='stat-map' style={{height: '100%', aspectRatio: '9/16', overflow: 'hidden', borderRadius: '1rem'}}></div>
+      </div>
+
+      <div>
+        <button 
+          style={{backgroundColor: 'purple', marginLeft: '1rem'}}
+          onClick={exportMap}>
+          EXPORT
+        </button>
       </div>
     </main>
   )

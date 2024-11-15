@@ -6,23 +6,15 @@
     width: 100vw;
     height: 100vh;
     display: flex;
+    padding: 2rem
 }
 
 .options {
     display: flex;
     justify-content: space-between;
     width: 800px;
-    padding: 2rem;
 }
 
 .map-container {
     height: 100%;
-    padding: 2rem;
-}
-
-#my-map {
-    aspect-ratio: 9/16;
-    height: 100%;
-    border-radius: 1rem;
-    overflow: hidden;
 }
