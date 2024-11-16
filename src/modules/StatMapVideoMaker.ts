@@ -139,7 +139,7 @@ export default class StatMapVideoMaker {
         return pathString.trim(); // Ensure no trailing whitespace
     }
 
-    async createVideo(svg: SVGSVGElement, resolution: Resolution) {
+    async createVideo(svg: SVGSVGElement, tsdata: any, resolution: Resolution) {
         try {
             const svgString = new XMLSerializer().serializeToString(svg);
 
@@ -170,6 +170,7 @@ export default class StatMapVideoMaker {
             const vps = new VideoProcessorServer();
             const res = await vps.createVideo({
                 svgString,
+                tsdata,
                 videoWidth,
                 videoHeight
             });

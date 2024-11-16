@@ -1,7 +1,17 @@
 export default class VideoProcessorServer {
-    async createVideo({ svgString, videoWidth, videoHeight }: { svgString: string, videoWidth: number, videoHeight: number }) {
+    /**
+     * 
+     * @param svgString
+     * @param tsdata
+     * @param videoWidth
+     * @param videoHeight
+     * 
+     * @returns response
+     */
+    async createVideo({ svgString, tsdata, videoWidth, videoHeight }: { svgString: string, tsdata: any, videoWidth: number, videoHeight: number }) {
         const payload = {
             svg: svgString,
+            tsdata: tsdata,
             videoWidth,
             videoHeight
         }

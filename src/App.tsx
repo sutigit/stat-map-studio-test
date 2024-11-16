@@ -5,6 +5,9 @@ import StatMapDisplay, { Country, AdministrativeLevel, ResolutionLevel } from 's
 
 import StatMapVideoMaker, { Resolution } from './modules/StatMapVideoMaker';
 
+// some fake data
+import fin_timeseries_data from './test_data/fin_timeseries_data.json';
+
 function App() {
   const statMapRef = useRef<StatMapDisplay | null>(null);
   const statMapDiv = useRef<HTMLDivElement | null>(null);
@@ -43,10 +46,10 @@ function App() {
     });
 
     // 2. Then we create a timeseries metadata object for the video
-    // const tsdata = ...
+    const tsdata = fin_timeseries_data;
 
-    // 3. Create the video
-    smvm.createVideo(svg, Resolution.FULL_HD)
+    // 3. Create the video with the SVG and timeseries data
+    smvm.createVideo(svg, tsdata, Resolution.FULL_HD)
       .then(res => {
         console.log(res);
 
