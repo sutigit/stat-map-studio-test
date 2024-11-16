@@ -1,3 +1,4 @@
+// ol imports
 import BaseLayer from "ol/layer/Base";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
@@ -6,6 +7,9 @@ import Feature from "ol/Feature";
 import { LineString, MultiPolygon, Polygon, Geometry } from "ol/geom";
 import { Coordinate } from "ol/coordinate";
 import { Style } from "ol/style";
+
+// sharp imports
+import sharp from 'sharp';
 
 export enum Resolution {
     'FULL_HD' = 'FULL_HD',
@@ -171,7 +175,17 @@ export default class StatMapVideoExporter {
         downloadLink.click();
     }
 
-    SVGtoPNG(svg: SVGSVGElement, name: string) {
-        // code...
+    downloadPNG(png: any, name: string) {
+        // Trigger download of PNG buffer
+        const downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(new Blob([png], { type: 'image/png' }));
+        downloadLink.download = name;
+        downloadLink.click();
     }
+
+    // SHARP DOES NOT WORK ON BROWSER
+    // async SVGtoPNG(svg: SVGSVGElement) {
+    //     const svgString = new XMLSerializer().serializeToString(svg);
+    //     return await sharp(svgString).png().toBuffer();
+    // }
 }

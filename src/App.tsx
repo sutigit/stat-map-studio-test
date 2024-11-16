@@ -27,7 +27,7 @@ function App() {
     }
   }, []);
 
-  const downloadSVG = () => {
+  const download = () => {
     const map = statMapRef.current?.getMap();
 
     if (!map) throw new Error('Map not initialized');
@@ -38,7 +38,12 @@ function App() {
 
     const exporter = new StatMapVideoExporter(width, height, Resolution.FULL_HD);
     const svg: SVGSVGElement = exporter.mapToSVG(map);
-    exporter.downloadSVG(svg, 'stat-map.svg');
+    // exporter.downloadSVG(svg, 'stat-map.svg');
+
+    // exporter.SVGtoPNG(svg)
+    //   .then(png => {
+    //     exporter.downloadPNG(png, 'stat-map.png');
+    //   });
   };
 
   return (
@@ -48,13 +53,13 @@ function App() {
       </div>
 
       <div className='map-container'>
-        <div id='stat-map' ref={statMapDiv} style={{height: '100%', aspectRatio: '9/16', overflow: 'hidden', borderRadius: '1rem'}}></div>
+        <div id='stat-map' ref={statMapDiv} style={{ height: '100%', aspectRatio: '9/16', overflow: 'hidden', borderRadius: '1rem' }}></div>
       </div>
 
       <div>
-        <button 
-          onClick={downloadSVG}
-          style={{backgroundColor: 'purple', marginLeft: '1rem'}}>
+        <button
+          onClick={download}
+          style={{ backgroundColor: 'purple', marginLeft: '1rem' }}>
           EXPORT
         </button>
       </div>
