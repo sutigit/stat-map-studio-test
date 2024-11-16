@@ -3,16 +3,12 @@ import { useEffect, useRef } from 'react';
 
 import StatMapDisplay, { Country, AdministrativeLevel, ResolutionLevel } from 'stat-map-display';
 
-import StatMapVideoMaker, { Resolution } from './modules/StatMapVideoMaker';
-
-// some fake data
-import fin_timeseries_data from './test_data/fin_timeseries_data.json';
+// My components
+import MediaExporter from './components/mediaExporter';
 
 function App() {
   const statMapRef = useRef<StatMapDisplay | null>(null);
   const statMapDiv = useRef<HTMLDivElement | null>(null);
-
-  const smvm = new StatMapVideoMaker();
 
   useEffect(() => {
     if (!statMapRef.current) {
@@ -32,32 +28,6 @@ function App() {
     }
   }, []);
 
-  const createVideo = () => {
-    const map = statMapRef.current?.getMap();
-
-    if (!map) throw new Error('Map not initialized');
-    if (!statMapDiv.current) throw new Error('Map container not initialized');
-
-    // 1. First, we need to convert the map to an SVG element
-    const svg: SVGSVGElement = smvm.mapToSVG({
-      statMap: map,
-      viewPortWidth: statMapDiv.current.clientWidth,
-      viewPortHeight: statMapDiv.current.clientHeight
-    });
-
-    // 2. Then we create a timeseries metadata object for the video
-    const tsdata = fin_timeseries_data;
-
-    // 3. Create the video with the SVG and timeseries data
-    smvm.createVideo(svg, tsdata, Resolution.FULL_HD)
-      .then(res => {
-        console.log(res);
-
-        // 4. Export the video
-        // smvm.exportVideo(res);
-
-      });
-  };
 
   return (
     <main id="app">
@@ -70,11 +40,7 @@ function App() {
       </div>
 
       <div>
-        <button
-          onClick={createVideo}
-          style={{ backgroundColor: 'purple', marginLeft: '1rem' }}>
-          EXPORT VIDEO
-        </button>
+        <MediaExporter statMapRef={statMapRef} statMapDiv={statMapDiv}/>
       </div>
     </main>
   )

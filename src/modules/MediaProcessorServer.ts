@@ -1,4 +1,4 @@
-export default class VideoProcessorServer {
+export default class MediaProcessorServer {
     /**
      * 
      * @param svgString

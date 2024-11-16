@@ -13,7 +13,7 @@ import { Style } from "ol/style";
 // import sharp from 'sharp';
 
 // Server imports
-import VideoProcessorServer from "./VideoProcessorServer";
+import MediaProcessorServer from "./MediaProcessorServer";
 
 export enum Resolution {
     'FULL_HD' = 'FULL_HD',
@@ -167,8 +167,8 @@ export default class StatMapVideoMaker {
                     throw new Error('Unsupported resolution');
             }
 
-            const vps = new VideoProcessorServer();
-            const res = await vps.createVideo({
+            const mps = new MediaProcessorServer();
+            const res = await mps.createVideo({
                 svgString,
                 tsdata,
                 videoWidth,
