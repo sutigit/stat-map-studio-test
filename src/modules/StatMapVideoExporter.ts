@@ -9,7 +9,8 @@ import { Coordinate } from "ol/coordinate";
 import { Style } from "ol/style";
 
 // sharp imports
-import sharp from 'sharp';
+// sharp does not work on browser, let's do image processing on the server
+// import sharp from 'sharp';
 
 export enum Resolution {
     'FULL_HD' = 'FULL_HD',
