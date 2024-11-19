@@ -13,7 +13,7 @@ import { Style } from "ol/style";
 // import sharp from 'sharp';
 
 // Server imports
-import MediaProcessorServer from "./MediaProcessorServer";
+import MediaProcessorServer from "../servers/MediaProcessorServer";
 
 export enum Resolution {
     'FULL_HD' = 'FULL_HD',

@@ -3,6 +3,9 @@ import { useEffect, useRef } from 'react';
 
 import StatMapDisplay, { Country, AdministrativeLevel, ResolutionLevel } from 'stat-map-display';
 
+// fake data
+import fin_timeseries_data from './test_data/fin_timeseries_data.json';
+
 // My components
 import MediaExporter from './components/mediaExporter';
 
@@ -25,14 +28,27 @@ function App() {
           highlight: false,
         }
       });
+
+      // Style features according to selected(initial) year of timeseries
+      // statMapRef.current.forEach('feature', (feature) => {
+      //   feature.setStyle({
+      //     fill: 'rgba(0, 0, 0, 0.1)',
+      //   });
+      // }
     }
   }, []);
 
 
+  const playTimeseries = () => {
+    console.log(fin_timeseries_data.meta.minYear);
+  };
+
   return (
     <main id="app">
       <div className="options">
-        <p>Hello</p>
+        <button onClick={playTimeseries}>
+          Play timeseries
+        </button>
       </div>
 
       <div className='map-container'>
