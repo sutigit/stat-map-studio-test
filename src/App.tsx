@@ -1,6 +1,10 @@
 import './App.css';
 import { useEffect, useRef } from 'react';
 
+// ol imports
+import { Feature } from 'ol';
+import { Fill, Style } from 'ol/style';
+
 import StatMapDisplay, { Country, AdministrativeLevel, ResolutionLevel } from 'stat-map-display';
 
 // fake data
@@ -8,6 +12,26 @@ import fin_timeseries_data from './test_data/fin_timeseries_data.json';
 
 // My components
 import MediaExporter from './components/mediaExporter';
+
+// Utils
+import { mapToChoroplethTresholds } from './utils/color-utils';
+
+interface TSData {
+  meta: {
+    name: string,
+    minYear: number,
+    maxYear: number,
+    minValue: number,
+    maxValue: number,
+    choropleth_tresholds: number[],
+  },
+  regiondata: {
+    [key: string]: {
+      [key: string]: number
+    }
+  }
+}
+
 
 function App() {
   const statMapRef = useRef<StatMapDisplay | null>(null);
@@ -30,11 +54,19 @@ function App() {
       });
 
       // Style features according to selected(initial) year of timeseries
-      // statMapRef.current.forEach('feature', (feature) => {
-      //   feature.setStyle({
-      //     fill: 'rgba(0, 0, 0, 0.1)',
-      //   });
-      // }
+      const tsdata: TSData = fin_timeseries_data;
+      const targetYear = String(tsdata.meta.minYear);
+
+      statMapRef.current.forEachFeature((feature: Feature, natcode: string) => {
+        const value = tsdata.regiondata['KU' + natcode][targetYear];
+
+        feature.setStyle(new Style({
+            fill: new Fill({
+              color: mapToChoroplethTresholds(value, tsdata.meta.choropleth_tresholds),
+            }),
+          })
+        );
+      });
     }
   }, []);
 
@@ -56,7 +88,7 @@ function App() {
       </div>
 
       <div>
-        <MediaExporter statMapRef={statMapRef} statMapDiv={statMapDiv}/>
+        <MediaExporter statMapRef={statMapRef} statMapDiv={statMapDiv} />
       </div>
     </main>
   )
