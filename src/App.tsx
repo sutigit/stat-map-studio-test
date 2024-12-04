@@ -14,7 +14,7 @@ import fin_timeseries_data from './test_data/fin_timeseries_data.json';
 import MediaExporter from './components/mediaExporter';
 
 // Utils
-import { mapToChoroplethTresholds } from './utils/color-utils';
+import ColorUtils from './utils/color-utils';
 
 interface TSData {
   meta: {
@@ -36,6 +36,13 @@ interface TSData {
 function App() {
   const statMapRef = useRef<StatMapDisplay | null>(null);
   const statMapDiv = useRef<HTMLDivElement | null>(null);
+
+  // Init color utils
+  const cu = new ColorUtils({
+    startColor: '#FFFFFF',
+    endColor: '#FF0000',
+    tresholds: fin_timeseries_data.meta.choropleth_tresholds
+  });
 
   useEffect(() => {
     if (!statMapRef.current) {
@@ -61,10 +68,10 @@ function App() {
         const value = tsdata.regiondata['KU' + natcode][targetYear];
 
         feature.setStyle(new Style({
-            fill: new Fill({
-              color: mapToChoroplethTresholds(value, tsdata.meta.choropleth_tresholds),
-            }),
-          })
+          fill: new Fill({
+            color: cu.mapToChoroplethTresholds(value),
+          }),
+        })
         );
       });
     }

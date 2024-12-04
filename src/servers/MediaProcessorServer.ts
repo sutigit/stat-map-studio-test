@@ -10,8 +10,8 @@ export default class MediaProcessorServer {
      */
     async createVideo({ svgString, tsdata, videoWidth, videoHeight }: { svgString: string, tsdata: any, videoWidth: number, videoHeight: number }) {
         const payload = {
-            svg: svgString,
-            tsdata: tsdata,
+            map_svg: svgString,
+            ts_data: tsdata,
             videoWidth,
             videoHeight
         }

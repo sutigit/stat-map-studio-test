@@ -8,10 +8,6 @@ import { LineString, MultiPolygon, Polygon, Geometry } from "ol/geom";
 import { Coordinate } from "ol/coordinate";
 import { Style } from "ol/style";
 
-// sharp imports
-// sharp does not work on browser, let's do image processing on the server
-// import sharp from 'sharp';
-
 // Server imports
 import MediaProcessorServer from "../servers/MediaProcessorServer";
 
