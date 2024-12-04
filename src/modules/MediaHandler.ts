@@ -17,7 +17,34 @@ export enum Resolution {
     '4k' = '4k',
 }
 
-export default class StatMapVideoMaker {
+export interface SVGData {
+    statMap: Map,
+    viewPortWidth: number,
+    viewPortHeight: number
+}
+
+export interface TimeSeriesData {
+    meta: {
+        name: string,
+        minYear: number,
+        maxYear: number,
+        minValue: number,
+        maxValue: number,
+        choropleth_tresholds: number[]
+    },
+    regiondata: {
+        [key: string]: {
+            [key: string]: number
+        }
+    }
+}
+
+/**
+ * This class is handles converting the openlayer map into different media formats.
+ * ol-map -> svg
+ * ol-map + tsdata -> video
+ */
+export default class MediaHandler {
 
     /**
      * This funciton converts an openlayer map object into an svg element.
@@ -27,7 +54,7 @@ export default class StatMapVideoMaker {
      * @param viewPortHeight: number
      * @returns svg: SVGSVGElement
      */
-    mapToSVG({ statMap, viewPortWidth, viewPortHeight }: { statMap: Map, viewPortWidth: number, viewPortHeight: number }): SVGSVGElement {
+    mapToSVG({ statMap, viewPortWidth, viewPortHeight }: SVGData): SVGSVGElement {
         const svgNamespace = 'http://www.w3.org/2000/svg';
         const svg = document.createElementNS(svgNamespace, 'svg');
         const svgGroup = document.createElementNS(svgNamespace, 'g');
@@ -162,8 +189,10 @@ export default class StatMapVideoMaker {
      * @param resolution 
      * @returns 
      */
-    async createVideo(svg: SVGSVGElement, tsdata: any, resolution: Resolution) {
+    async mapToVideo(svgdata: SVGData, tsdata: TimeSeriesData, resolution: Resolution) {
         try {
+            const svg: SVGSVGElement = this.mapToSVG(svgdata);
+
             const svgString = new XMLSerializer().serializeToString(svg);
 
             if (!svgString) {
@@ -191,7 +220,7 @@ export default class StatMapVideoMaker {
             }
 
             const mps = new MediaProcessorServer();
-            const res = await mps.createVideo({
+            const res = await mps.processToVideo({
                 svgString,
                 tsdata,
                 videoWidth,
