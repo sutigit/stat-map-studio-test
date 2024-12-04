@@ -1,5 +1,5 @@
 
-import MediaHandler, { Resolution, SVGData, TimeSeriesData } from '../modules/MediaHandler';
+import { mapToVideo, Resolution, SVGData, TimeSeriesData } from '../modules/MediaHandler';
 import StatMapDisplay from 'stat-map-display';
 
 // some fake data
@@ -9,8 +9,6 @@ export default function MediaExporter({ statMapRef, statMapDiv }: { statMapRef: 
 
 
     const createVideo = () => {
-        const meh = new MediaHandler();
-
         const map = statMapRef.current?.getMap();
 
         if (!map) throw new Error('Map not initialized');
@@ -23,7 +21,7 @@ export default function MediaExporter({ statMapRef, statMapDiv }: { statMapRef: 
             viewPortHeight: statMapDiv.current.clientHeight
         }
 
-        meh.mapToVideo(svgdata, tsdata, Resolution.FULL_HD)
+        mapToVideo(svgdata, tsdata, Resolution.FULL_HD)
             .then(res => {
                 console.log(res);
 
