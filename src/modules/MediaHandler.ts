@@ -8,8 +8,8 @@ import { LineString, MultiPolygon, Polygon, Geometry } from "ol/geom";
 import { Coordinate } from "ol/coordinate";
 import { Style } from "ol/style";
 
-// Server imports
-import MediaProcessorServer from "../api/MediaProcessorServer";
+// Media processing API
+import { processToVideo } from "../api/MediaProcessorAPI";
 
 export enum Resolution {
     'FULL_HD' = 'FULL_HD',
@@ -219,8 +219,7 @@ export default class MediaHandler {
                     throw new Error('Unsupported resolution');
             }
 
-            const mps = new MediaProcessorServer();
-            const res = await mps.processToVideo({
+            const res = await processToVideo({
                 svgString,
                 tsdata,
                 videoWidth,
