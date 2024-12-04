@@ -19,6 +19,14 @@ export enum Resolution {
 
 export default class StatMapVideoMaker {
 
+    /**
+     * This funciton converts an openlayer map object into an svg element.
+     * 
+     * @param statMap: Map
+     * @param viewPortWidth: number
+     * @param viewPortHeight: number
+     * @returns svg: SVGSVGElement
+     */
     mapToSVG({ statMap, viewPortWidth, viewPortHeight }: { statMap: Map, viewPortWidth: number, viewPortHeight: number }): SVGSVGElement {
         const svgNamespace = 'http://www.w3.org/2000/svg';
         const svg = document.createElementNS(svgNamespace, 'svg');
@@ -61,6 +69,14 @@ export default class StatMapVideoMaker {
         return svg;
     }
 
+    /**
+     * This function takes in individual Geometry objects from an ol layer and converts them into a path string.
+     * It is privately in the mapToSVG function.
+     * 
+     * @param geometry 
+     * @param statMap 
+     * @returns 
+     */
     private createPathString(geometry: Geometry, statMap: Map): string {
         const roundCoord = (coord: number | null): number | null => {
             if (coord === null) return null;
@@ -135,6 +151,17 @@ export default class StatMapVideoMaker {
         return pathString.trim(); // Ensure no trailing whitespace
     }
 
+    /**
+     * This method attempts to process a video based on the map svg and tsdata which stands for timeseries data.
+     * The tsdata contains some mandatory information on how to process the svg to turn it into a timeseries video.
+     * The function first creates an svg string out of the map svg, validates the resolution and then sends it to 
+     * the server to process it together with the tsdata and resolution information.
+     * 
+     * @param svg 
+     * @param tsdata 
+     * @param resolution 
+     * @returns 
+     */
     async createVideo(svg: SVGSVGElement, tsdata: any, resolution: Resolution) {
         try {
             const svgString = new XMLSerializer().serializeToString(svg);
