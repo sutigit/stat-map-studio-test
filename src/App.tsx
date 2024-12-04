@@ -45,7 +45,10 @@ function App() {
   });
 
   useEffect(() => {
+    // Do this only once
     if (!statMapRef.current) {
+
+      // Create the map using 'stat-map-display'
       statMapRef.current = new StatMapDisplay({
         id: 'stat-map',
         country: Country.FINLAND,
@@ -60,13 +63,13 @@ function App() {
         }
       });
 
-      // Style features according to selected(initial) year of timeseries
+      // Brins in the fake timeseries data
       const tsdata: TSData = fin_timeseries_data;
       const targetYear = String(tsdata.meta.minYear);
-
+      
+      // Style (color) features according to selected(initial) year of timeseries
       statMapRef.current.forEachFeature((feature: Feature, natcode: string) => {
         const value = tsdata.regiondata['KU' + natcode][targetYear];
-
         feature.setStyle(new Style({
           fill: new Fill({
             color: cu.mapToChoroplethTresholds(value),
@@ -79,7 +82,8 @@ function App() {
 
 
   const playTimeseries = () => {
-    console.log(fin_timeseries_data.meta.minYear);
+    // DOES NOTHING YET
+    // console.log(fin_timeseries_data.meta.minYear);
   };
 
   return (

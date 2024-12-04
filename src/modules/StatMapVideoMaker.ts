@@ -9,7 +9,7 @@ import { Coordinate } from "ol/coordinate";
 import { Style } from "ol/style";
 
 // Server imports
-import MediaProcessorServer from "../servers/MediaProcessorServer";
+import MediaProcessorServer from "../api/MediaProcessorServer";
 
 export enum Resolution {
     'FULL_HD' = 'FULL_HD',
