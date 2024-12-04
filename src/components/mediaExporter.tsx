@@ -8,7 +8,7 @@ import fin_timeseries_data from '../test_data/fin_timeseries_data.json';
 export default function MediaExporter({ statMapRef, statMapDiv }: { statMapRef: React.RefObject<StatMapDisplay>, statMapDiv: React.RefObject<HTMLDivElement> }) {
 
 
-    const createVideo = () => {
+    const exportVideo = () => {
         const map = statMapRef.current?.getMap();
 
         if (!map) throw new Error('Map not initialized');
@@ -33,7 +33,7 @@ export default function MediaExporter({ statMapRef, statMapDiv }: { statMapRef: 
     return (
         <div>
             <button
-                onClick={createVideo}
+                onClick={exportVideo}
                 style={{ backgroundColor: 'purple', marginLeft: '1rem' }}>
                 EXPORT VIDEO
             </button>
