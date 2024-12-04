@@ -91,10 +91,12 @@ function App() {
       </div>
 
       <div className='map-container'>
+        {/* Is responsible for displaying the openlayers map */}
         <div id='stat-map' ref={statMapDiv} style={{ height: '100%', aspectRatio: '9/16', overflow: 'hidden', borderRadius: '1rem' }}></div>
       </div>
 
       <div>
+        {/* Is reponsible of sending the map to the video processing service */}
         <MediaExporter statMapRef={statMapRef} statMapDiv={statMapDiv} />
       </div>
     </main>
